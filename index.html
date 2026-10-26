@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZacLearn | Domine a Programação do Zero ao Avançado</title>
+    <meta name="description" content="Aprenda HTML, CSS, JavaScript, Python, C++ e Java com mais de 1.000 missões práticas, IDE integrada e IA. 100% Grátis.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           VARIÁVEIS DE DESIGN & ESTÉ TICA J.A.R.V.I.S. / CYBERPUNK
+           ============================================================ */
+        :root {
+            --bg-dark: #050811;
+            --surface: #0d1322;
+            --surface-card: #131c30;
+            --neon-cyan: #00f0ff;
+            --neon-green: #00ff88;
+            --neon-purple: #8a2be2;
+            --neon-orange: #ff6b00;
+            --neon-red: #ff2a6d;
+            --text-primary: #e2f8ff;
+            --text-secondary: #8a9bb0;
+            --border-glow: rgba(0, 240, 255, 0.3);
+            --font-title: 'Orbitron', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        /* ============================================================
+           RESET & CONFIGURAÇÃO DE SCROLL SNAPPING
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        body {
+            line-height: 1.6;
+            background: radial-gradient(circle at 50% 20%, #0d1d3a 0%, var(--bg-dark) 70%);
+        }
+
+        /* ============================================================
+           BARRA DE NAVEGAÇÃO HUD
+           ============================================================ */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 19, 34, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .btn-header {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* ============================================================
+           SEÇÕES E SCROLL SNAP
+           ============================================================ */
+        section {
+            scroll-snap-align: start;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           HERO SECTION
+           ============================================================ */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .badge-cyber {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-family: var(--font-title);
+            font-size: 3.2rem;
+            line-height: 1.15;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title .highlight {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--neon-cyan);
+            background: linear-gradient(180deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+            -webkit-background-clip: text;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: #fff;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            font-family: var(--font-title);
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.7);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-glow);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* CARD DE PREVIEW MOCKUP */
+        .hud-preview {
+            background: var(--surface-card);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .corvo-avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: var(--surface);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            font-family: var(--font-code);
+        }
+
+        .corvo-eyes {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .corvo-beak {
+            color: var(--neon-orange);
+            font-size: 1rem;
+        }
+
+        /* ============================================================
+           DIFERENCIAIS / RECURSOS DE IMPACTO
+           ============================================================ */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .grid-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card-feature {
+            background: var(--surface-card);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 16px;
+            padding: 2.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .card-feature:hover {
+            transform: translateY(-6px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+        }
+
+        .card-feature:hover::before {
+            transform: translateX(100%);
+        }
+
+        .icon-box {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+        }
+
+        .card-feature h3 {
+            font-family: var(--font-title);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--neon-cyan);
+        }
+
+        .card-feature p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           LINGUAGENS E CURRÍCULO (+1.000 TAREFAS)
+           ============================================================ */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .lang-card {
+            background: var(--surface);
+            border: 1px solid var(--border-glow);
+            padding: 1.5rem;
+            border-radius: 14px;
+            text-align: center;
+            font-family: var(--font-code);
+            transition: all 0.3s ease;
+        }
+
+        .lang-card:hover {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            transform: scale(1.05);
+        }
+
+        .lang-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+        }
+
+        .lang-tasks {
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            margin-top: 0.3rem;
+        }
+
+        /* ============================================================
+           TABELA COMPARATIVA (POR QUE SOMOS DIFERENTES)
+           ============================================================ */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            margin-top: 2rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--surface);
+            font-family: var(--font-title);
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(0, 240, 255, 0.02);
+        }
+
+        .check-green {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        .cross-red {
+            color: var(--neon-red);
+        }
+
+        /* ============================================================
+           CALL TO ACTION (CTA FINAL)
+           ============================================================ */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(13, 19, 34, 0.9), rgba(138, 43, 226, 0.2));
+            border: 1px solid var(--neon-cyan);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
+            position: relative;
+        }
+
+        .cta-box h2 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border-glow);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+        }
+
+        /* ============================================================
+           RESPONSIVIDADE
+           ============================================================ */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-cta-group {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            section {
+                padding-top: 5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                ⚡ Zac<span>Learn</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#linguagens">Linguagens</a></li>
+                <li><a href="#comparativo">Diferenciais</a></li>
+            </ul>
+            <a href="#download" class="btn-header">BAIXAR AGORA</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="badge-cyber">
+                        <span>🤖 ZAC-AI ENGINE</span> • 100% GRATUITO
+                    </div>
+                    <h1 class="hero-title">
+                        A Forma Mais Rápida e Futurista de <span class="highlight">Aprender a Programar</span>.
+                    </h1>
+                    <p class="hero-description">
+                        Esqueça cursos teóricos e chatos. O ZacLearn transforma o aprendizado em um jogo com mais de 1.000 missões práticas, IDE estilo VS Code integrada e suporte com inteligência artificial.
+                    </p>
+                    <div class="hero-cta-group">
+                        <a href="#download" class="btn-primary">
+                            🚀 COMEÇAR AGORA DE GRAÇA
+                        </a>
+                        <a href="#recursos" class="btn-secondary">
+                            Conhecer Recursos ➔
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PREVIEW CARD INTERATIVO DA HUD -->
+                <div class="hud-preview">
+                    <div class="corvo-avatar">
+                        <div class="corvo-eyes">⬡ ⬡</div>
+                        <div class="corvo-beak">▼</div>
+                    </div>
+                    <div style="font-family: var(--font-code); text-align: center;">
+                        <p style="color: var(--neon-cyan); font-size: 0.85rem; font-weight: bold;">ZAC-AI ONLINE</p>
+                        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 8px;">
+                            "Sua próxima missão de HTML5 está pronta. Preparado para codificar?"
+                        </p>
+                    </div>
+                    <div style="margin-top: 1.5rem; background: var(--bg-dark); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,240,255,0.2); font-family: var(--font-code); font-size: 0.8rem; color: var(--neon-green);">
+                        &lt;h1&gt;ZacLearn Protocol&lt;/h1&gt;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECURSOS / DIFERENCIAIS -->
+    <section id="recursos">
+        <div class="container">
+            <div class="section-header">
+                <h2>Projetado para Transformar Iniciantes em Devs</h2>
+                <p>Todas as ferramentas de um ambiente profissional adaptadas para a tela do seu celular.</p>
+            </div>
+
+            <div class="grid-features">
+                <div class="card-feature">
+                    <div class="icon-box">📘 ➔ 💻</div>
+                    <h3>Primeiro Aprenda, Depois Pratique</h3>
+                    <p>Diferente de apps que te jogam direto no código sem contexto, o ZacLearn explica a teoria com exemplos claros antes de liberar os exercícios.</p>
+                </div>
+
+                <div class="card-feature">
+                    <div class="icon-box">⚡</div>
+                    <h3>+1.000 Missões Práticas</h3>
+                    <p>Divididas do Iniciante ao Avançado. Exercícios de escolha múltipla, preenchimento de lacunas e refatoração real de código.</p>
+                </div>
+
+                <div class="card-feature">
+                    <div class="icon-box">🛠️</div>
+                    <h3>IDE VS Code de Bolso</h3>
+                    <p>Um ambiente interativo com atalhos de digitação rápida e visualização Web em tempo real. Digite seu código e veja o resultado na hora.</p>
+                </div>
+
+                <div class="card-feature">
+                    <div class="icon-box">🦅</div>
+                    <h3>Mascote ZAC-AI</h3>
+                    <p>O robô-corvo cibernético reage ao seu desempenho, dando dicas estratégicas nos momentos de dúvida e comemorando suas conquistas.</p>
+                </div>
+
+                <div class="card-feature">
+                    <div class="icon-box">🎮</div>
+                    <h3>Gamificação HUD Futurista</h3>
+                    <p>Sinta-se dentro de uma interface no estilo J.A.R.V.I.S. Ganhe EXP ⚡, mantenha sua Ofensiva 🔥 e acumule Núcleos de Energia 💎.</p>
+                </div>
+
+                <div class="card-feature">
+                    <div class="icon-box">🔓</div>
+                    <h3>100% Gratuito Sem Pegadinhas</h3>
+                    <p>Sem bloqueios de conteúdo ou assinaturas caríssimas. Todo o currículo está disponível de forma livre para todos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LINGUAGENS SUPORTADAS -->
+    <section id="linguagens">
+        <div class="container">
+            <div class="section-header">
+                <h2>As Linguagens Mais Demandadas do Mercado</h2>
+                <p>Aprenda a stack completa para desenvolvimento Web, Mobile e Engenharia de Software.</p>
+            </div>
+
+            <div class="languages-grid">
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">🌐</div>
+                    <div class="lang-title">HTML5</div>
+                    <div class="lang-tasks">+200 Missões</div>
+                </div>
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">🎨</div>
+                    <div class="lang-title">CSS3</div>
+                    <div class="lang-tasks">+200 Missões</div>
+                </div>
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">⚡</div>
+                    <div class="lang-title">JavaScript</div>
+                    <div class="lang-tasks">+250 Missões</div>
+                </div>
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">🐍</div>
+                    <div class="lang-title">Python</div>
+                    <div class="lang-tasks">+200 Missões</div>
+                </div>
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">⚙️</div>
+                    <div class="lang-title">C++</div>
+                    <div class="lang-tasks">+150 Missões</div>
+                </div>
+                <div class="lang-card">
+                    <div style="font-size: 2rem;">☕</div>
+                    <div class="lang-title">Java</div>
+                    <div class="lang-tasks">+150 Missões</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABELA COMPARATIVA DE VENDAS -->
+    <section id="comparativo">
+        <div class="container">
+            <div class="section-header">
+                <h2>Por que o ZacLearn é Superior?</h2>
+                <p>Veja como nos comparamos com os métodos tradicionais e outros aplicativos do mercado.</p>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>RECURSO</th>
+                        <th>ZACLEARN</th>
+                        <th>OUTROS APPS (MIMO, DUOLINGO)</th>
+                        <th>CURSOS EM VÍDEO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Preço</strong></td>
+                        <td class="check-green">100% Grátis</td>
+                        <td class="cross-red">Planos Pagos / Limitado</td>
+                        <td>Pago / Caro</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ensina Teoria Antes das Tarefas</strong></td>
+                        <td class="check-green">✓ Sim (Passo a Passo)</td>
+                        <td class="cross-red">✗ Direto no teste</td>
+                        <td class="check-green">✓ Sim (Muito longo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IDE Integrada com Preview</strong></td>
+                        <td class="check-green">✓ Sim (Estilo VS Code)</td>
+                        <td class="cross-red">✗ Limitado</td>
+                        <td class="cross-red">✗ Requer PC configurado</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Volume de Prática</strong></td>
+                        <td class="check-green">✓ +1.000 Missões</td>
+                        <td>Variável</td>
+                        <td class="cross-red">✗ Passivo (Apenas assiste)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interface HUD Futurista</strong></td>
+                        <td class="check-green">✓ Exclusiva J.A.R.V.I.S.</td>
+                        <td class="cross-red">✗ Padrão infantil</td>
+                        <td class="cross-red">✗ Sem gamificação</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION (DOWNLOAD) -->
+    <section id="download">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Pronto para Iniciar sua Jornada Dev?</h2>
+                <p>Baixe o ZacLearn agora mesmo e dê o primeiro passo para dominar a programação do zero ao avançado.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#" class="btn-primary" onclick="alert('Link de download do APK ou Google Play Store aqui!')">
+                        📲 BAIXAR APK / GOOGLE PLAY
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 <strong>ZacCode Sistemas e Tecnologia Ltda.</strong> Todos os direitos reservados.</p>
+        <p style="margin-top: 5px;">Desenvolvido com foco em alta performance e ensino livre de programação.</p>
+    </footer>
+
+    <!-- INTERATIVIDADE JS -->
+    <script>
+        // Efeito Suave ao Clicar nos Links de Navegação
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
